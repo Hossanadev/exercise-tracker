@@ -123,19 +123,18 @@ app.get("/api/users/:_id/logs", async (req, res) => {
       error: "No exercises found for this user",
     });
   }
-  let exercises = [];
-  for (let element of exercise) {
-    exercises.push({
-      description: element.description,
-      duration: element.duration,
-      date: element.date.toDateString(),
-    });
-  }
+  let log = exercise.map((ex) => {
+    return {
+      description: ex.description,
+      duration: ex.duration,
+      date: ex.date.toDateString("en-GB"),
+    };
+  });
   res.json({
     username: user.username,
     count: exercise.length,
     _id: user._id,
-    log: exercises,
+    log,
   });
 });
 
